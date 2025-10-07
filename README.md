@@ -17,6 +17,58 @@
 
 ## English
 
+## 📊 AutoML Architecture
+
+```mermaid
+graph TB
+    A[Dataset] --> B[AutoML Optimizer]
+    B --> C{Search Strategy}
+    C -->|Bayesian| D[Optuna]
+    C -->|Evolutionary| E[Hyperopt]
+    C -->|Grid/Random| F[Scikit-learn]
+    D --> G[Suggest Hyperparameters]
+    E --> G
+    F --> G
+    G --> H[Train Model]
+    H --> I[Cross-Validation]
+    I --> J[Evaluate Metrics]
+    J --> K{Trials Complete?}
+    K -->|No| G
+    K -->|Yes| L[Best Model]
+    L --> M[Feature Importance]
+    L --> N[Hyperparameter Importance]
+    
+    style A fill:#e1f5ff
+    style L fill:#c8e6c9
+    style C fill:#fff9c4
+```
+
+## 🔄 Optimization Process
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant AutoML
+    participant Optuna
+    participant Model
+    participant Evaluator
+    
+    User->>AutoML: Start optimization
+    loop N Trials
+        AutoML->>Optuna: Request hyperparameters
+        Optuna-->>AutoML: Suggested params
+        AutoML->>Model: Train with params
+        Model-->>AutoML: Trained model
+        AutoML->>Evaluator: Cross-validate
+        Evaluator-->>AutoML: Score
+        AutoML->>Optuna: Report score
+        Optuna->>Optuna: Update search space
+    end
+    Optuna-->>User: Best hyperparameters
+```
+
+
+
 ### 📋 Overview
 
 Comprehensive AutoML framework for automated hyperparameter optimization, feature selection, and model selection. Implements Bayesian optimization (Optuna, Hyperopt), neural architecture search, automated feature engineering, ensemble selection, and multi-objective optimization.
