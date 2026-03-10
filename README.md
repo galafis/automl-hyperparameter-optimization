@@ -1,311 +1,126 @@
-# 🤖 Automl Hyperparameter Optimization
+# AutoML Hyperparameter Optimization
 
-> Professional Python project implementing Automl Hyperparameter Optimization
+[![Python](https://img.shields.io/badge/Python-3.9+-3776AB.svg)](https://www.python.org/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-[![Python](https://img.shields.io/badge/Python-3.12-3776AB.svg)](https://img.shields.io/badge/)
-[![Plotly](https://img.shields.io/badge/Plotly-5.18-3F4F75.svg)](https://img.shields.io/badge/)
-[![scikit--learn](https://img.shields.io/badge/scikit--learn-1.4-F7931E.svg)](https://img.shields.io/badge/)
-[![XGBoost](https://img.shields.io/badge/XGBoost-2.0-FF6600.svg)](https://img.shields.io/badge/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+Sistema AutoML para otimizacao de hiperparametros. Inclui grid search, random search, otimizacao Bayesiana com Gaussian Process, Hyperband, early stopping, definicao de espacos de parametros e rastreamento de experimentos.
 
-[English](#english) | [Português](#português)
+AutoML system for hyperparameter optimization. Includes grid search, random search, Bayesian optimization with Gaussian Process surrogate, Hyperband, early stopping, parameter space definition, and experiment tracking.
 
 ---
 
-## English
-
-### 🎯 Overview
-
-**Automl Hyperparameter Optimization** is a production-grade Python application that showcases modern software engineering practices including clean architecture, comprehensive testing, containerized deployment, and CI/CD readiness.
-
-The codebase comprises **537 lines** of source code organized across **9 modules**, following industry best practices for maintainability, scalability, and code quality.
-
-### ✨ Key Features
-
-- **🤖 ML Pipeline**: End-to-end machine learning workflow from data to deployment
-- **🔬 Feature Engineering**: Automated feature extraction and transformation
-- **📊 Model Evaluation**: Comprehensive metrics and cross-validation
-- **🚀 Model Serving**: Production-ready prediction API
-- **🏗️ Object-Oriented**: 5 core classes with clean architecture
-
-### 🏗️ Architecture
+## Arquitetura / Architecture
 
 ```mermaid
-graph LR
-    subgraph Input["📥 Input"]
-        A[Raw Data]
-        B[Feature Config]
+graph TB
+    subgraph Space["Espaco de Parametros"]
+        PS[ParameterSpace]
+        PS --> |float, int, categorical| SAMPLE[sample / grid]
     end
-    
-    subgraph Pipeline["🔬 ML Pipeline"]
-        C[Preprocessing]
-        D[Feature Engineering]
-        E[Model Training]
-        F[Evaluation]
+
+    subgraph Methods["Metodos de Otimizacao"]
+        GS[Grid Search]
+        RS[Random Search]
+        BO[Bayesian Optimization]
+        HB[Hyperband]
     end
-    
-    subgraph Output["📤 Output"]
-        G[Trained Models]
-        H[Metrics & Reports]
-        I[Predictions]
+
+    subgraph Support["Suporte"]
+        ET[ExperimentTracker]
+        ES[EarlyStopping]
+        GP[GP Surrogate]
     end
-    
-    A --> C --> D --> E --> F
-    B --> D
-    F --> G
-    F --> H
-    G --> I
-    
-    style Input fill:#e1f5fe
-    style Pipeline fill:#f3e5f5
-    style Output fill:#e8f5e9
+
+    subgraph Interface["Interface Unificada"]
+        AML[AutoMLOptimizer]
+    end
+
+    PS --> GS
+    PS --> RS
+    PS --> BO
+    PS --> HB
+    BO --> GP
+    RS --> ES
+    BO --> ES
+    GS --> ET
+    RS --> ET
+    BO --> ET
+    HB --> ET
+    AML --> GS
+    AML --> RS
+    AML --> BO
+    AML --> HB
 ```
 
-### 🚀 Quick Start
-
-#### Prerequisites
-
-- Python 3.12+
-- pip (Python package manager)
-
-#### Installation
-
-```bash
-# Clone the repository
-git clone https://github.com/galafis/automl-hyperparameter-optimization.git
-cd automl-hyperparameter-optimization
-
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
-```
-
-#### Running
-
-```bash
-# Run the application
-python src/main.py
-```
-
-### 🧪 Testing
-
-```bash
-# Run all tests
-pytest
-
-# Run with coverage report
-pytest --cov --cov-report=html
-
-# Run specific test module
-pytest tests/test_main.py -v
-
-# Run with detailed output
-pytest -v --tb=short
-```
-
-### 📁 Project Structure
-
-```
-automl-hyperparameter-optimization/
-├── assets/
-├── data/
-│   ├── processed/
-│   └── raw/
-├── notebooks/
-├── src/          # Source code
-│   ├── data/
-│   │   └── __init__.py
-│   ├── models/        # Data models
-│   │   ├── __init__.py
-│   │   ├── automl.py
-│   │   └── optimizer.py
-│   ├── utils/         # Utilities
-│   │   └── __init__.py
-│   └── __init__.py
-├── tests/         # Test suite
-│   ├── __init__.py
-│   └── test_models.py
-├── LICENSE
-├── README.md
-├── requirements.txt
-└── setup.py
-```
-
-### 🛠️ Tech Stack
-
-| Technology | Description | Role |
-|------------|-------------|------|
-| **Python** | Core Language | Primary |
-| **Plotly** | Interactive visualization | Framework |
-| **scikit-learn** | Machine learning library | Framework |
-| **XGBoost** | Gradient boosting framework | Framework |
-
-### 🤝 Contributing
-
-Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
-
-1. Fork the project
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
-
-### 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-### 👤 Author
-
-**Gabriel Demetrios Lafis**
-- GitHub: [@galafis](https://github.com/galafis)
-- LinkedIn: [Gabriel Demetrios Lafis](https://linkedin.com/in/gabriel-demetrios-lafis)
-
----
-
-## Português
-
-### 🎯 Visão Geral
-
-**Automl Hyperparameter Optimization** é uma aplicação Python de nível profissional que demonstra práticas modernas de engenharia de software, incluindo arquitetura limpa, testes abrangentes, implantação containerizada e prontidão para CI/CD.
-
-A base de código compreende **537 linhas** de código-fonte organizadas em **9 módulos**, seguindo as melhores práticas do setor para manutenibilidade, escalabilidade e qualidade de código.
-
-### ✨ Funcionalidades Principais
-
-- **🤖 ML Pipeline**: End-to-end machine learning workflow from data to deployment
-- **🔬 Feature Engineering**: Automated feature extraction and transformation
-- **📊 Model Evaluation**: Comprehensive metrics and cross-validation
-- **🚀 Model Serving**: Production-ready prediction API
-- **🏗️ Object-Oriented**: 5 core classes with clean architecture
-
-### 🏗️ Arquitetura
+## Fluxo Bayesiano / Bayesian Flow
 
 ```mermaid
-graph LR
-    subgraph Input["📥 Input"]
-        A[Raw Data]
-        B[Feature Config]
+sequenceDiagram
+    participant User
+    participant BO as BayesianOptimizer
+    participant GP as GP Surrogate
+    participant EI as Expected Improvement
+    participant Obj as Objective Function
+
+    User->>BO: optimize(objective)
+    loop Initial Random Trials
+        BO->>Obj: evaluate(random config)
+        Obj-->>BO: score
     end
-    
-    subgraph Pipeline["🔬 ML Pipeline"]
-        C[Preprocessing]
-        D[Feature Engineering]
-        E[Model Training]
-        F[Evaluation]
+    loop Bayesian Iterations
+        BO->>GP: fit(X, y)
+        BO->>EI: evaluate candidates
+        EI-->>BO: best candidate
+        BO->>Obj: evaluate(best candidate)
+        Obj-->>BO: score
     end
-    
-    subgraph Output["📤 Output"]
-        G[Trained Models]
-        H[Metrics & Reports]
-        I[Predictions]
-    end
-    
-    A --> C --> D --> E --> F
-    B --> D
-    F --> G
-    F --> H
-    G --> I
-    
-    style Input fill:#e1f5fe
-    style Pipeline fill:#f3e5f5
-    style Output fill:#e8f5e9
+    BO-->>User: best_trial
 ```
 
-### 🚀 Início Rápido
+## Funcionalidades / Features
 
-#### Prerequisites
+| Funcionalidade / Feature | Descricao / Description |
+|---|---|
+| Parameter Space | Definicao de float, int e categorical / float, int, and categorical parameter definition |
+| Grid Search | Busca exaustiva em grade / Exhaustive grid search |
+| Random Search | Amostragem aleatoria com seed / Random sampling with seed |
+| Bayesian Optimization | GP surrogate com Expected Improvement / GP surrogate with Expected Improvement |
+| Hyperband | Alocacao adaptativa de budget / Adaptive budget allocation |
+| Early Stopping | Parada quando nao ha melhoria / Stop when no improvement |
+| Experiment Tracker | Log de trials, melhor score ao longo do tempo / Trial logging, best score over time |
 
-- Python 3.12+
-- pip (Python package manager)
+## Inicio Rapido / Quick Start
 
-#### Installation
+```python
+from src.models.optimizer import AutoMLOptimizer, ParameterSpace
+
+space = (
+    ParameterSpace()
+    .add_float("learning_rate", 0.001, 0.1, log_scale=True)
+    .add_int("max_depth", 3, 10)
+    .add_categorical("algorithm", ["rf", "xgb", "lgbm"])
+)
+
+def objective(params):
+    return -(params["learning_rate"] - 0.01) ** 2 - (params["max_depth"] - 6) ** 2
+
+automl = AutoMLOptimizer(n_trials=50, method="bayesian")
+best = automl.optimize(space, objective)
+print(f"Best score: {automl.best_score}")
+print(f"Best params: {automl.best_params}")
+```
+
+## Testes / Tests
 
 ```bash
-# Clone the repository
-git clone https://github.com/galafis/automl-hyperparameter-optimization.git
-cd automl-hyperparameter-optimization
-
-# Create and activate virtual environment
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-
-# Install dependencies
-pip install -r requirements.txt
+pytest tests/ -v
 ```
 
-#### Running
+## Tecnologias / Technologies
 
-```bash
-# Run the application
-python src/main.py
-```
+- Python 3.9+
+- pytest
 
-### 🧪 Testing
+## Licenca / License
 
-```bash
-# Run all tests
-pytest
-
-# Run with coverage report
-pytest --cov --cov-report=html
-
-# Run specific test module
-pytest tests/test_main.py -v
-
-# Run with detailed output
-pytest -v --tb=short
-```
-
-### 📁 Estrutura do Projeto
-
-```
-automl-hyperparameter-optimization/
-├── assets/
-├── data/
-│   ├── processed/
-│   └── raw/
-├── notebooks/
-├── src/          # Source code
-│   ├── data/
-│   │   └── __init__.py
-│   ├── models/        # Data models
-│   │   ├── __init__.py
-│   │   ├── automl.py
-│   │   └── optimizer.py
-│   ├── utils/         # Utilities
-│   │   └── __init__.py
-│   └── __init__.py
-├── tests/         # Test suite
-│   ├── __init__.py
-│   └── test_models.py
-├── LICENSE
-├── README.md
-├── requirements.txt
-└── setup.py
-```
-
-### 🛠️ Stack Tecnológica
-
-| Tecnologia | Descrição | Papel |
-|------------|-----------|-------|
-| **Python** | Core Language | Primary |
-| **Plotly** | Interactive visualization | Framework |
-| **scikit-learn** | Machine learning library | Framework |
-| **XGBoost** | Gradient boosting framework | Framework |
-
-### 🤝 Contribuindo
-
-Contribuições são bem-vindas! Sinta-se à vontade para enviar um Pull Request.
-
-### 📄 Licença
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-### 👤 Autor
-
-**Gabriel Demetrios Lafis**
-- GitHub: [@galafis](https://github.com/galafis)
-- LinkedIn: [Gabriel Demetrios Lafis](https://linkedin.com/in/gabriel-demetrios-lafis)
+MIT License - veja [LICENSE](LICENSE) / see [LICENSE](LICENSE).
