@@ -7,6 +7,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 8000
-
-CMD ["python", "src/main.py"]
+CMD ["python", "-c", "from src.models.optimizer import AutoMLOptimizer, ParameterSpace; space = ParameterSpace().add_float('x', -5, 5).add_float('y', -5, 5); automl = AutoMLOptimizer(n_trials=50, method='bayesian'); best = automl.optimize(space, lambda p: -(p['x']**2 + p['y']**2)); print(f'Best score: {automl.best_score:.4f}'); print(f'Best params: {automl.best_params}')"]
